@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Undangan Rahmat & Amelia</title>
+    <style>
+        body { font-family: sans-serif; background: #fff; margin: 0; padding: 0; text-align: center; }
+        header { background: #f6f6f6; padding: 20px; }
+        h1 { font-size: 2em; margin: 0.2em; }
+        .cover-img { width: 100%; max-width: 500px; margin: 20px auto; display: block; }
+        .nav { margin: 20px 0; }
+        .nav a { margin: 0 10px; text-decoration: none; color: #d03c3c; font-weight: bold; }
+        .popup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                 background: white; border: 1px solid #ccc; padding: 20px; z-index: 1000; }
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                   background: rgba(0, 0, 0, 0.5); z-index: 999; }
+    </style>
+</head>
+<body>
+    <audio autoplay loop>
+        <source src="assets/background.mp3" type="audio/mp3" />
+        Browser Anda tidak mendukung audio.
+    </audio>
+
+    <header>
+        <h1>Undangan Pernikahan</h1>
+        <p id="guestName">Kepada Yth. Bapak/Ibu/Saudara/i</p>
+    </header>
+
+    <img src="assets/Cover.jpg" class="cover-img" alt="Cover Undangan"/>
+
+    <div class="nav">
+        <a href="#akad">Akad</a>
+        <a href="#resepsi">Resepsi</a>
+        <a href="#rsvp" onclick="openPopup()">RSVP</a>
+    </div>
+
+    <div id="akad"><img src="assets/Akad.jpg" class="cover-img" alt="Akad"/></div>
+    <div id="resepsi"><img src="assets/Resepsi.jpg" class="cover-img" alt="Resepsi"/></div>
+    <div><img src="assets/Love story.jpg" class="cover-img"/></div>
+    <div><img src="assets/Adab-adab.jpg" class="cover-img"/></div>
+    <div><img src="assets/Gift.jpg" class="cover-img"/></div>
+
+    <div class="overlay" id="overlay" onclick="closePopup()"></div>
+    <div class="popup" id="popup">
+        <h2>Konfirmasi Kehadiran</h2>
+        <iframe src="https://forms.gle/hgtJCPxg63aEsHJn6" width="100%" height="400" style="border:none;"></iframe>
+        <button onclick="closePopup()">Tutup</button>
+    </div>
+
+    <script>
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        const guestName = getQueryParam("to");
+        if (guestName) {
+            document.getElementById("guestName").innerText = "Kepada Yth. " + decodeURIComponent(guestName);
+        }
+
+        function openPopup() {
+            document.getElementById("overlay").style.display = "block";
+            document.getElementById("popup").style.display = "block";
+        }
+
+        function closePopup() {
+            document.getElementById("overlay").style.display = "none";
+            document.getElementById("popup").style.display = "none";
+        }
+    </script>
+</body>
+</html>
