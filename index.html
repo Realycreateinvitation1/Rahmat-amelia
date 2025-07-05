@@ -15,7 +15,7 @@
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: url('cover.jpg') no-repeat center center;
+      background: url('cover_web.jpg') no-repeat center center;
       background-size: cover;
       display: flex;
       justify-content: center;
@@ -32,39 +32,64 @@
       padding: 20px;
       border-radius: 12px;
     }
+
 .to h2 {font-size: 1.2em;}
-    .to h1 {font-size: 1.5em; color: #b3005e;}
+    .to h1 {font-size: 1.5em; color: #800000;}
     .to small {font-size: 0.75em; display: block; margin-top: 5px;}
-    .open-btn {
+    .open-btn, .rsvp-btn {
       margin-top: 20px;
       padding: 10px 24px;
       font-size: 1em;
-      background-color: #b3005e;
+      background-color: maroon;
       color: white;
       border: none;
       border-radius: 8px;
       cursor: pointer;
     }
     .content {display: none;}
-    iframe {
+    iframe {width: 100%; height: 100vh; border: none;}
+
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+    }
+
+.modal-content {
+      width: 90%;
+      max-width: 720px;
+      height: 90vh;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+    }
+    .modal iframe {
       width: 100%;
-      height: 100vh;
+      height: 100%;
       border: none;
     }
-    .rsvp-container {
-      padding: 20px;
-      background-color: #ffffff;
-    }
-    h2 {
-      text-align: center;
-      color: #b3005e;
-      margin-bottom: 1em;
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 16px;
+      font-size: 24px;
+      color: #555;
+      background: none;
+      border: none;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-<!-- COVER PEMBUKA -->
+<!-- COVER -->
 <div class="cover" id="cover">
   <div class="to">
     <h2>Kepada Yth.</h2>
@@ -78,13 +103,16 @@
 <div class="content" id="content">
   <iframe src="https://www.canva.com/design/DAGsA1FYeLM/6cRB5SOKna3i8spMvBaBaA/watch?embed" allow="autoplay" allowfullscreen></iframe>
 
-  <div class="rsvp-container">
-    <h2>Konfirmasi Kehadiran</h2>
-    <iframe 
-      src="https://docs.google.com/forms/d/e/1FAIpQLSdguYzRXRwn1rGl5-rAjRitZjvhrP_M_Ao7yeM-luB9aTe9dQ/viewform?embedded=true"
-      width="100%" height="600" frameborder="0" marginheight="0" marginwidth="0">
-      Memuat…
-    </iframe>
+  <div style="text-align: center; margin: 2em 0;">
+    <button class="rsvp-btn" onclick="showRSVP()">Konfirmasi Kehadiran</button>
+  </div>
+</div>
+
+<!-- MODAL RSVP -->
+<div class="modal" id="rsvpModal">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeRSVP()">✖</button>
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdguYzRXRwn1rGl5-rAjRitZjvhrP_M_Ao7yeM-luB9aTe9dQ/viewform?embedded=true" allowfullscreen></iframe>
   </div>
 </div>
 
@@ -95,12 +123,21 @@
     const name = params.get("to") || "Tamu Undangan";
     return decodeURIComponent(name.replace(/\\+/g, " "));
   }
-  document.getElementById("guestName").innerText = getGuestName();
 
   function openInvitation() {
     document.getElementById("cover").classList.add("hidden");
     document.getElementById("content").style.display = "block";
   }
+
+  function showRSVP() {
+    document.getElementById("rsvpModal").style.display = "flex";
+  }
+
+  function closeRSVP() {
+    document.getElementById("rsvpModal").style.display = "none";
+  }
+
+  document.getElementById("guestName").innerText = getGuestName();
 </script>
 
 </body>
